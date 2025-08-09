@@ -83,7 +83,7 @@
 
     /* モーダル（読みやすさ優先、iOS対策） */
     .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index:2000; transform: translateZ(0);}
-    .modal{width:min(760px, 96vw); position:relative; animation: popIn .38s ease; z-index:2001;}
+    .modal{width:min(760px, 96vw); position:relative; animation: popIn .38s ease; z-index:2001; margin-top: 50px;}
     @keyframes popIn{0%{transform:scale(.92); opacity:0}100%{transform:scale(1); opacity:1}}
     .modal::before{content:""; position:absolute; inset:-3px; border-radius:calc(var(--glass-br) + 6px); background: conic-gradient(from 120deg, var(--gold), #fff, var(--accent), var(--gold)); filter: blur(6px); opacity:.5; z-index:-2}
     .modal .content{ position:relative; border-radius: var(--glass-br); padding: clamp(26px, 6vw, 48px);
