@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, あきらちゃん！</title>
+  <meta name="description" content="爽やかで祝福感あふれるバースデーサイト" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Happy Birthday, あきらちゃん！" />
+  <meta property="og:description" content="お誕生日おめでとう！その声で世界をちょっとだけ良くしてください。" />
+  <meta property="og:image" content="assets/og.jpg" />
+  <meta name="theme-color" content="#6ec6ff" />
+  <style>
+    :root{
+      --bg1:#f7fbff; --bg2:#e6f4ff;
+      --accent:#339cff; --accent2:#7bdff6; --gold:#ffd166;
+      --glass-bg:rgba(255,255,255,.80); --glass-br:28px; --blur:18px;
+      --text:#1f2937; --muted:#4b5565; --shadow:0 15px 40px rgba(51,156,255,.22);
+    }
+    *{box-sizing:border-box}
+    body{ margin:0; color:var(--text);
+      background: radial-gradient(1200px 800px at 20% -10%, #eef7ff 0%, transparent 60%),
+                  radial-gradient(900px 700px at 120% 20%, rgba(123,223,246,.35) 0%, transparent 60%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans JP", sans-serif;
+      overflow-x:hidden; position:relative;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    /* オーロラ風の光（色がゆっくり変化） */
+    body::after{ content:""; position:fixed; inset:-20%; z-index:-2; pointer-events:none;
+      background: radial-gradient(40% 25% at 20% 20%, rgba(123,223,246,.35), transparent 60%),
+                  radial-gradient(35% 25% at 80% 30%, rgba(51,156,255,.35), transparent 60%),
+                  radial-gradient(30% 20% at 60% 80%, rgba(255,209,102,.35), transparent 60%);
+      mix-blend-mode:screen; filter:saturate(120%);
+      animation: aurora 18s ease-in-out infinite alternate;
+    }
+    @keyframes aurora{ 0%{ transform:translate3d(0,0,0) scale(1); filter:hue-rotate(0deg) }
+      50%{ transform:translate3d(2%,-1%,0) scale(1.05); filter:hue-rotate(12deg) }
+      100%{ transform:translate3d(-2%,1%,0) scale(1.02); filter:hue-rotate(-8deg) } }
+
+    /* 背景Canvasは前面に出しつつタップを邪魔しない */
+    #bgCanvas{position:fixed; inset:0; z-index:0; pointer-events:none}
+
+    .hero{position:relative; z-index:1; min-height:78vh; display:grid; place-items:center; text-align:center; padding: 24px;}
+    .hero-card{ width:min(900px, 94vw); padding: clamp(28px,6vw,64px);
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      background: var(--glass-bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" opacity="0.05"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="36">🎉</text></svg>') repeat;
+      background-size:100px; animation: bgMove 20s linear infinite;
+      border: 1px solid rgba(255,255,255,.85); border-radius: var(--glass-br); box-shadow: var(--shadow);
+      position:relative; overflow:hidden;
+    }
+    @keyframes bgMove{ 0%{background-position:0 0} 100%{background-position:200px 200px} }
+    /* 大きめ縁取り（固定） */
+    .hero-card::before{ content:""; position:absolute; inset:-2px; border-radius:calc(var(--glass-br) + 4px);
+      background: conic-gradient(from 0deg, var(--gold), var(--accent2), var(--accent), var(--gold));
+      filter: blur(8px); opacity:.30; z-index:-1; }
+    /* 斜めに流れるハイライト（回転ではなくスライド） */
+    .hero-card::after{ content:""; position:absolute; inset:0; pointer-events:none;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.18) 18%, rgba(255,255,255,.05) 40%, transparent 60%);
+      transform: translateX(-120%);
+      animation: shine 6.5s ease-in-out infinite; }
+    @keyframes shine{ 0%{transform:translateX(-120%)} 45%{transform:translateX(0%)} 100%{transform:translateX(120%)} }
+
+    h1{margin:0 0 16px; letter-spacing:.02em; line-height:1.1}
+    .h-line1{display:block; font-size: clamp(34px, 8vw, 72px); font-weight:900;
+      background: linear-gradient(90deg, var(--accent), #72baff, var(--accent)); background-size:200% 100%;
+      -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow: 0 2px 0 rgba(255,255,255,.3);
+      animation: txtShimmer 5s ease-in-out infinite; }
+    @keyframes txtShimmer{ 0%{background-position:0% 0} 50%{background-position:100% 0} 100%{background-position:0% 0} }
+    .h-line2{display:block; font-size: clamp(28px, 7vw, 58px); font-weight:800; color:#0f172a}
+    .sub{color:var(--muted); margin-bottom:28px; font-size:clamp(15px, 3.6vw, 20px)}
+
+    .btn{appearance:none; border:none; cursor:pointer; font-weight:800; letter-spacing:.03em; padding:18px 24px; border-radius:16px;
+      background: linear-gradient(180deg, var(--accent), #72baff); color:white; box-shadow:0 10px 30px rgba(0,0,0,.12);
+      transition:transform .08s ease; min-height:48px; position:relative; overflow:hidden}
+    .btn:hover{transform:translateY(-1px)}
+    /* ボタン外周のブレス効果 */
+    .btn::after{ content:""; position:absolute; inset:-6px; border-radius:18px; border:2px solid rgba(114,186,255,.55);
+      filter: blur(4px); opacity:.7; animation: breathe 2.8s ease-in-out infinite; }
+    @keyframes breathe{ 0%{transform:scale(.98); opacity:.5} 50%{transform:scale(1.02); opacity:.85} 100%{transform:scale(.98); opacity:.5} }
+
+    footer{max-width:1100px; margin: 40px auto 80px; padding:0 20px; color:var(--muted); font-size:13px; text-align:center}
+
+    /* モーダル（読みやすさ優先、iOS対策） */
+    .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index:2000; transform: translateZ(0);}
+    .modal{width:min(760px, 96vw); position:relative; animation: popIn .38s ease; z-index:2001;}
+    @keyframes popIn{0%{transform:scale(.92); opacity:0}100%{transform:scale(1); opacity:1}}
+    .modal::before{content:""; position:absolute; inset:-3px; border-radius:calc(var(--glass-br) + 6px); background: conic-gradient(from 120deg, var(--gold), #fff, var(--accent), var(--gold)); filter: blur(6px); opacity:.5; z-index:-2}
+    .modal .content{ position:relative; border-radius: var(--glass-br); padding: clamp(26px, 6vw, 48px);
+      background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(240,249,255,.98)); border:2px solid var(--accent);
+      box-shadow: 0 20px 50px rgba(0,0,0,.12), inset 0 8px 24px rgba(114,186,255,.15);
+      text-align:center; font-family: 'Noto Serif JP', serif; color:#0f172a; font-size: clamp(20px, 4.6vw, 28px); line-height:1.9; letter-spacing:0.05em;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="%23ffd166" opacity="0.08"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="36">🎵</text></svg>'); background-repeat:repeat; background-size:100px; }
+    .modal .content strong{color:var(--accent); font-size:1.2em; text-shadow:0 1px 2px rgba(0,0,0,.15)}
+    .x{position:absolute; top:10px; right:10px; background:transparent; border:none; color:#334155; font-size:24px; cursor:pointer; width:44px; height:44px}
+    .ribbon{position:absolute; top:-16px; left:50%; transform:translateX(-50%); background: linear-gradient(90deg, var(--gold), #fff6c2); color:#7c5200; font-weight:800; padding:6px 14px; border-radius:999px; border:1px solid rgba(124,82,0,.2);}
+
+    /* スマホ最適化 */
+    @media (max-width: 540px){ .hero{min-height:82vh; padding: 18px}
+      .hero-card{width: min(96vw, 620px); padding: 24px}
+      .h-line1{font-size: clamp(28px, 10vw, 44px)} .h-line2{font-size: clamp(24px, 9vw, 38px)}
+      .sub{font-size: 14px} .btn{width:100%; border-radius:14px}
+      .modal{width:min(680px, 96vw)} .modal .content{padding: 22px} }
+
+    /* 動きを控えめに（ユーザー設定に追従） */
+    @media (prefers-reduced-motion: reduce){ body::after{animation:none} .hero-card{animation:none}
+      .hero-card::after{animation:none} .h-line1{animation:none} .btn::after{animation:none} }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <main>
+    <section class="hero">
+      <div class="hero-card" id="card">
+        <h1>
+          <span class="h-line1">Happy Birthday,</span>
+          <span class="h-line2">あきらちゃん！</span>
+        </h1>
+        <p class="sub">この先の一年が、あなたの歌でもっと輝きますように。</p>
+        <button class="btn" id="openMsg">メッセージを開く</button>
+      </div>
+    </section>
+  </main>
+  <footer>© 2025 • Made with ❤︎</footer>
+
+  <div class="modal-backdrop" id="backdrop">
+    <div class="modal glass" role="dialog" aria-modal="true" aria-labelledby="mdttl">
+      <button class="x" id="closeMsg" aria-label="閉じる">×</button>
+      <div class="ribbon">With Love</div>
+      <div class="content">
+        <p id="mdttl"><strong>お誕生日おめでとう！</strong><br>その声で世界をちょっとだけ良くしてください。</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let vw = 0, vh = 0, rafId = null;
+      const cvs = document.getElementById('bgCanvas');
+      const ctx = cvs.getContext('2d');
+
+      function counts(){
+        const mobile = window.innerWidth < 540;
+        return {
+          notes: mobile ? Math.round(28*dpr) : Math.round(64*dpr*0.9),
+          stars: mobile ? Math.round(40*dpr) : Math.round(70*dpr)
+        };
+      }
+
+      let NOTES=[], STARS=[];
+      function resize(){
+        vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        cvs.width = Math.floor(vw * dpr);
+        cvs.height = Math.floor(vh * dpr);
+        cvs.style.width = vw + 'px';
+        cvs.style.height = vh + 'px';
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        const c = counts();
+        NOTES = Array.from({length:c.notes},()=>({x:Math.random()*vw,y:Math.random()*vh,s:0.8+Math.random()*1.4,v:0.22+Math.random()*0.45,a:Math.random()*Math.PI*2}));
+        STARS = Array.from({length:c.stars},()=>({x:Math.random()*vw,y:Math.random()*vh,r:Math.random()*1.4+0.4,t:Math.random()*360}));
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,vw,vh);
+        for(const s of STARS){ s.t=(s.t||0)+2; const o=0.25+0.75*(0.5+0.5*Math.sin(s.t*Math.PI/180)); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.fill(); }
+        for(const n of NOTES){ n.y+=n.v; n.x+=Math.sin((n.y+n.a)/90)*0.4; if(n.y>vh+20){n.y=-20;n.x=Math.random()*vw} ctx.save(); ctx.translate(n.x,n.y); ctx.scale(n.s,n.s); ctx.fillStyle='rgba(51,156,255,0.6)'; ctx.beginPath(); ctx.arc(0,0,3,0,Math.PI*2); ctx.fill(); ctx.fillRect(2,-18,2,18); ctx.beginPath(); ctx.moveTo(4,-18); ctx.lineTo(14,-10); ctx.lineWidth=2; ctx.strokeStyle='rgba(123,223,246,0.9)'; ctx.stroke(); ctx.restore(); }
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function start(){ if(rafId) cancelAnimationFrame(rafId); resize(); draw(); }
+
+      document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'){ start(); } else { if(rafId) cancelAnimationFrame(rafId); } });
+      window.addEventListener('resize', resize, {passive:true});
+      window.addEventListener('orientationchange', ()=> setTimeout(start, 150));
+
+      // 初期化（DOMContentLoaded 後）
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', start);
+      }else{ start(); }
+
+      // モーダル
+      const openBtn = document.getElementById('openMsg');
+      const closeBtn = document.getElementById('closeMsg');
+      const backdrop = document.getElementById('backdrop');
+
+      function open(){ backdrop.style.display='flex'; burst(); }
+      function close(){ backdrop.style.display='none'; }
+
+      openBtn.addEventListener('click', open);
+      openBtn.addEventListener('touchstart', open, {passive:true});
+      closeBtn.addEventListener('click', close);
+      closeBtn.addEventListener('touchstart', close, {passive:true});
+      backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) close(); });
+
+      // 祝福バースト
+      function burst(){ const colors=['#ffffff','#72baff','#339cff','#7bdff6','#ffd166'];
+        for(let i=0;i<120;i++){ const s=document.createElement('span'); const size=4+Math.random()*8;
+          s.style.cssText=`position:fixed;z-index:9999;top:48%;left:50%;width:${size}px;height:${size}px;`+
+            `background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.6?'50%':'3px'};`+
+            `transform:translate(-50%,-50%);opacity:.95;pointer-events:none;`;
+          document.body.appendChild(s);
+          const tx=(Math.random()-.5)*vw*.9; const ty=(-vh*0.6)-Math.random()*200;
+          const rot=(Math.random()>0.5?1:-1)*(180+Math.random()*360); const dur=900+Math.random()*1500;
+          s.animate([{transform:`translate(-50%,-50%) rotate(0deg)`},{transform:`translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg)`}],{duration:dur,easing:'cubic-bezier(.2,.6,.2,1)',fill:'forwards'}).onfinish=()=>s.remove(); }
+      }
+
+      // デスクトップのみ：控えめ3Dチルト
+      const card = document.getElementById('card');
+      const finePointer = window.matchMedia('(pointer:fine)').matches;
+      if(finePointer){
+        let rect=null; function updRect(){ rect=card.getBoundingClientRect(); }
+        window.addEventListener('resize',updRect); window.addEventListener('scroll',updRect); setTimeout(updRect,0);
+        card.addEventListener('mousemove', e=>{ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; if(!rect) updRect();
+          const x=(e.clientX-rect.left)/rect.width-0.5; const y=(e.clientY-rect.top)/rect.height-0.5;
+          card.style.transform=`perspective(900px) rotateX(${(-y*3).toFixed(2)}deg) rotateY(${(x*4).toFixed(2)}deg)`; });
+        card.addEventListener('mouseleave', ()=>{ card.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg)'; });
+      }
+    })();
+  </script>
+</body>
+</html>
