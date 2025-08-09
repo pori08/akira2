@@ -95,7 +95,7 @@
     .x{position:absolute; top:10px; right:10px; background:transparent; border:none; color:#334155; font-size:24px; cursor:pointer; width:44px; height:44px}
     .ribbon{position:absolute; top:-16px; left:50%; transform:translateX(-50%); background: linear-gradient(90deg, var(--gold), #fff6c2); color:#7c5200; font-weight:800; padding:6px 14px; border-radius:999px; border:1px solid rgba(124,82,0,.2);}
 
-    .balloon{ position:fixed; bottom:-100px; left:50%; width:60px; height:75px;
+    .balloon{ position:fixed; bottom:-100px; width:60px; height:75px;
       background:radial-gradient(circle at 20px 20px, #ff6b6b, #f06595);
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       box-shadow: inset -10px -10px 0 rgba(0,0,0,0.07);
@@ -104,7 +104,7 @@
     }
     .balloon::after{ content:""; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%);
       width:0; height:0; border-style:solid; border-width:10px 5px 0 5px;
-      border-color:#ff6b6b transparent transparent transparent;
+      border-color:var(--knot-color, #f06595) transparent transparent transparent;
     }
 
     /* スマホ最適化 */
@@ -221,27 +221,27 @@
       // 風船アニメーション
       function flyBalloons() {
         const balloonColors = [
-          'radial-gradient(circle at 20px 20px, #ff6b6b, #f06595)',
-          'radial-gradient(circle at 20px 20px, #74c0fc, #a5d8ff)',
-          'radial-gradient(circle at 20px 20px, #ffd43b, #ffec99)',
-          'radial-gradient(circle at 20px 20px, #69db7c, #96f2aa)'
+          { bg: 'radial-gradient(circle at 20px 20px, #ff6b6b, #f06595)', knot: '#f06595' },
+          { bg: 'radial-gradient(circle at 20px 20px, #74c0fc, #a5d8ff)', knot: '#a5d8ff' },
+          { bg: 'radial-gradient(circle at 20px 20px, #ffd43b, #ffec99)', knot: '#ffec99' },
+          { bg: 'radial-gradient(circle at 20px 20px, #69db7c, #96f2aa)', knot: '#96f2aa' }
         ];
         for (let i = 0; i < 15; i++) {
           const b = document.createElement('div');
-          b.className = 'balloon';
           const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
-          b.style.background = color;
+          b.className = 'balloon';
+          b.style.background = color.bg;
+          b.style.setProperty('--knot-color', color.knot);
           b.style.left = `${10 + Math.random() * 80}%`;
-          b.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
-          b.style.setProperty('--knot-color', color.split(',')[1]);
           document.body.appendChild(b);
 
+          const scale = 0.8 + Math.random() * 0.4;
           const duration = 4000 + Math.random() * 3000;
           const sway = (Math.random() - 0.5) * 150;
 
           b.animate([
-            { bottom: '-100px', opacity: 1, transform: `translateX(0) rotate(0deg)` },
-            { bottom: `${vh + 100}px`, opacity: 0.8, transform: `translateX(${sway}px) rotate(${(Math.random() - 0.5) * 40}deg)` }
+            { bottom: '-100px', opacity: 1, transform: `translateX(0) rotate(0deg) scale(${scale})` },
+            { bottom: `${vh + 100}px`, opacity: 0.8, transform: `translateX(${sway}px) rotate(${(Math.random() - 0.5) * 40}deg) scale(${scale})` }
           ], {
             duration: duration,
             easing: 'ease-in-out',
